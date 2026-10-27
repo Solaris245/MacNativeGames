@@ -1,19 +1,20 @@
-name: Check Apple Silicon Builder
+name: Inspect MacNativeGames Build
 
 on:
   workflow_dispatch:
 
 jobs:
-  check-runner:
+  inspect:
     runs-on: macos-26
     steps:
-      - name: Check hardware and disk
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Inspect build requirements
         run: |
-          echo "=== Architecture ==="
-          uname -m
-          echo "=== macOS ==="
-          sw_vers
-          echo "=== Xcode ==="
-          xcodebuild -version
           echo "=== Disk space ==="
           df -h /
+          echo "=== iOS SDK ==="
+          xcrun --sdk iphoneos --show-sdk-version
+          echo "=== Build script options ==="
+          python3 build_app.py --help
