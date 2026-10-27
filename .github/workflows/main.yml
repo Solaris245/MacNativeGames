@@ -1,0 +1,19 @@
+name: Check Apple Silicon Builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-runner:
+    runs-on: macos-26
+    steps:
+      - name: Check hardware and disk
+        run: |
+          echo "=== Architecture ==="
+          uname -m
+          echo "=== macOS ==="
+          sw_vers
+          echo "=== Xcode ==="
+          xcodebuild -version
+          echo "=== Disk space ==="
+          df -h /
